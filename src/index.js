@@ -1,10 +1,6 @@
 import { createRoot } from 'react-dom/client';
 
-// import App from './App';
-function App() {
-	// eslint-disable-next-line
-	return <div>Hello world</div>;
-}
+import App from './App';
 
 const root = createRoot(document.getElementById('root'));
 

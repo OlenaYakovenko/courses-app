@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    background-color: #fbf3f3;
+}
+
+.wrapper {
+    margin: 0 auto;
+    padding: 1rem;
+    min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+    .wrapper{
+        max-width: 1200px;
+    }
+}
+
+.main {
+    padding: 0.75rem 1rem;
+    border: 2px solid #00b3ff;
+}

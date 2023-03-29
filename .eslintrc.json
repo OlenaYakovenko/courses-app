@@ -41,12 +41,18 @@
         ],
         "react/prop-types": [0],
         "no-console": "off",
+        "no-alert": "off",
         "no-restricted-syntax": [
             "error",
             {
                 "selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
                 "message": "Unexpected property on console object was called"
             }
-        ]
+        ],
+        "react/jsx-props-no-spreading": [1, {
+            "html": "enforce",
+            "custom": "ignore",
+            "explicitSpread": "ignore"            
+        }]
     } 
 } 
