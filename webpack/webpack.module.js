@@ -1,4 +1,5 @@
-/* eslint-disable */
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const CSSModuleLoader = {
 	loader: 'css-loader',
 	options: {
@@ -29,11 +30,7 @@ const styleLoader =
 		? 'style-loader'
 		: MiniCssExtractPlugin.loader;
 
-if (process.env.SERVE) {
-	plugins.push(new ReactRefreshWebpackPlugin());
-}
-
-const innerModule = (mode, cssLoader, cssModuleLoader, styleLoaderVar) => ({
+const innerModule = (mode) => ({
 	module: {
 		rules: [
 			{
@@ -43,11 +40,11 @@ const innerModule = (mode, cssLoader, cssModuleLoader, styleLoaderVar) => ({
 			{
 				test: /\.css$/,
 				exclude: /\.module\.(sa|sc|c)ss$/,
-				use: [styleLoaderVar, cssLoader, 'postcss-loader'],
+				use: [styleLoader, CSSLoader, 'postcss-loader'],
 			},
 			{
 				test: /\.module\.css$/,
-				use: [styleLoaderVar, cssModuleLoader, 'postcss-loader'],
+				use: [styleLoader, CSSModuleLoader, 'postcss-loader'],
 			},
 			{
 				test: /\.(png|jpe?g|gif|svg|webp|ico)$/i,
@@ -73,8 +70,4 @@ const innerModule = (mode, cssLoader, cssModuleLoader, styleLoaderVar) => ({
 
 module.exports = {
 	innerModule,
-	plugins,
-	CSSModuleLoader,
-	CSSLoader,
-	styleLoader,
 };
