@@ -4,7 +4,7 @@
         "es2021": true 
     }, 
     "parser": "@babel/eslint-parser",
-    "extends": ["plugin:react/recommended", "airbnb", "plugin:react/jsx-runtime", "prettier"], 
+    "extends": ["plugin:react/recommended", "airbnb", "plugin:react/jsx-runtime", "plugin:import/recommended", "prettier"], 
     "parserOptions": { 
         "ecmaFeatures": { 
             "jsx": true 
@@ -14,7 +14,8 @@
     }, 
     "plugins": [ 
         "react", 
-        "prettier" 
+        "prettier",
+        "import" 
     ], 
     "settings": {
         "react": {
@@ -24,7 +25,12 @@
             // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
             "Hyperlink",
             {"name": "Link", "linkAttribute": "to"}
-          ]
+        ],
+        "import/resolver": {
+            "webpack": {
+              "config": "./webpack/webpack.resolve.js"
+            }
+        }
     },
     "rules": { 
         "prettier/prettier": [ 

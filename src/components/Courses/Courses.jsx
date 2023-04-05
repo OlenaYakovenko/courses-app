@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 
-import { CourseCard, SearchBar } from './components';
-import { Button } from '../../common';
 import {
 	mockedCoursesList,
 	mockedAuthorsList,
 	ADD_COURSE_BUTTON_TEXT,
-} from '../../constants';
+} from 'constants.js';
+import { Button } from 'common';
+import { CourseCard, SearchBar } from 'components/Courses/components';
 
-import styles from './Courses.module.css';
+import styles from 'components/Courses/Courses.module.css';
 
 function Courses({ setIsAddingCourse }) {
 	const [courses, setCourses] = useState([]);

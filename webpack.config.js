@@ -35,6 +35,7 @@ module.exports = merge(devServer, resolve, innerModule(mode), {
 		path: path.resolve(__dirname, 'dist'),
 		assetModuleFilename: 'assets/[hash][ext][query]',
 		clean: true,
+		publicPath: '/',
 	},
 	devtool: mode === 'development' && 'source-map',
 });

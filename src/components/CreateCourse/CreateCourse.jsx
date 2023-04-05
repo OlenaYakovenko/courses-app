@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Button, Input } from '../../common';
+import { Button, Input } from 'common';
 
 import {
 	CREATE_COURSE_BUTTON_TEXT,
@@ -18,12 +18,12 @@ import {
 	DURATION_INPUT_PLACEHOLDER_TEXT,
 	mockedAuthorsList,
 	mockedCoursesList,
-} from '../../constants';
+} from 'constants.js';
 
-import pipeDuration from '../../helpers/pipeDuration';
-import dateGenerator from '../../helpers/dateGenerator';
+import pipeDuration from 'helpers/pipeDuration';
+import dateGenerator from 'helpers/dateGenerator';
 
-import styles from './CreateCourse.module.css';
+import styles from 'components/CreateCourse/CreateCourse.module.css';
 
 function CreateCourse({ setIsAddingCourse }) {
 	const [courseTitle, setCourseTitle] = useState('');
@@ -148,6 +148,7 @@ function CreateCourse({ setIsAddingCourse }) {
 							id='author'
 							placeholderText={AUTHOR_INPUT_PLACEHOLDER_TEXT}
 							labelText={AUTHOR_LABEL_TEXT}
+							value={newAuthorName}
 							onChange={handleAuthorName}
 						/>
 						<div className={styles['btn-container']}>

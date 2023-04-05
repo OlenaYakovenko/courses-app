@@ -1,10 +1,10 @@
-import { Button, Input } from '../../../../common';
+import { Button, Input } from 'common';
 import {
 	SEARCH_BUTTON_TEXT,
 	SEARCH_INPUT_PLACEHOLDER_TEXT,
-} from '../../../../constants';
+} from 'constants.js';
 
-import styles from './SearchBar.module.css';
+import styles from 'components/Courses/components/SearchBar/SearchBar.module.css';
 
 function SearchBar({ searchTerm, handleSearch, handleInputChange }) {
 	return (

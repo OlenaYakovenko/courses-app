@@ -1,8 +1,8 @@
-import { Button } from '../../../../common';
-import pipeDuration from '../../../../helpers/pipeDuration';
-import { SHOW_COURSE_BUTTON_TEXT } from '../../../../constants';
+import { Button } from 'common';
+import pipeDuration from 'helpers/pipeDuration';
+import { SHOW_COURSE_BUTTON_TEXT } from 'constants.js';
 
-import styles from './CourseCard.module.css';
+import styles from 'components/Courses/components/CourseCard/CourseCard.module.css';
 
 function CourseCard({
 	title,
