@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { Button } from 'common';
 import pipeDuration from 'helpers/pipeDuration';
 import { SHOW_COURSE_BUTTON_TEXT } from 'constants.js';
@@ -5,12 +7,15 @@ import { SHOW_COURSE_BUTTON_TEXT } from 'constants.js';
 import styles from 'components/Courses/components/CourseCard/CourseCard.module.css';
 
 function CourseCard({
+	id,
 	title,
 	description,
 	authorsNames,
 	creationDate,
 	duration,
 }) {
+	const navigation = useNavigate();
+
 	return (
 		<article className={styles['course-card']}>
 			<div className={styles['card-content']}>
@@ -31,7 +36,10 @@ function CourseCard({
 					{creationDate}
 				</p>
 				<div className={styles['info-center']}>
-					<Button text={SHOW_COURSE_BUTTON_TEXT} />
+					<Button
+						text={SHOW_COURSE_BUTTON_TEXT}
+						onClick={() => navigation(`/courses/${id}`)}
+					/>
 				</div>
 			</div>
 		</article>

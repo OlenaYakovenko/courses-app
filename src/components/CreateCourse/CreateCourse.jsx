@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { v4 as uuidv4 } from 'uuid';
 
 import { Button, Input } from 'common';
@@ -25,13 +27,15 @@ import dateGenerator from 'helpers/dateGenerator';
 
 import styles from 'components/CreateCourse/CreateCourse.module.css';
 
-function CreateCourse({ setIsAddingCourse }) {
+function CreateCourse() {
 	const [courseTitle, setCourseTitle] = useState('');
 	const [descriptionText, setDescriptionText] = useState('');
 	const [newAuthorName, setNewAuthorName] = useState('');
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
 	const [courseAuthorsList, setCourseAuthorsList] = useState([]);
 	const [courseDuration, setCourseDuration] = useState(0);
+
+	const navigation = useNavigate();
 
 	const handleTitle = (e) => {
 		const title = e.target.value;
@@ -105,7 +109,7 @@ function CreateCourse({ setIsAddingCourse }) {
 			alert('Duration has to be more than zero');
 		} else {
 			mockedCoursesList.push(createdCourse);
-			setIsAddingCourse(false);
+			navigation('/courses');
 		}
 	};
 

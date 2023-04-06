@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
 	mockedCoursesList,
@@ -10,7 +11,9 @@ import { CourseCard, SearchBar } from 'components/Courses/components';
 
 import styles from 'components/Courses/Courses.module.css';
 
-function Courses({ setIsAddingCourse }) {
+function Courses() {
+	const navigation = useNavigate();
+
 	const [courses, setCourses] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
 
@@ -49,7 +52,7 @@ function Courses({ setIsAddingCourse }) {
 				/>
 				<Button
 					text={ADD_COURSE_BUTTON_TEXT}
-					onClick={() => setIsAddingCourse(true)}
+					onClick={() => navigation('/courses/add')}
 				/>
 			</header>
 			{courses.map((course) => {
