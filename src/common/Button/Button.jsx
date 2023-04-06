@@ -1,6 +1,14 @@
+import PropTypes from 'prop-types';
+
 import styles from './Button.module.css';
 
-function Button({ type = 'button', className, text, icon, onClick }) {
+function Button({
+	type = 'button',
+	className = '',
+	text = '',
+	icon = '',
+	onClick = null,
+}) {
 	return (
 		<button
 			// eslint-disable-next-line react/button-has-type
@@ -15,5 +23,13 @@ function Button({ type = 'button', className, text, icon, onClick }) {
 		</button>
 	);
 }
+
+Button.propTypes = {
+	type: PropTypes.string,
+	className: PropTypes.string,
+	text: PropTypes.string,
+	icon: PropTypes.string,
+	onClick: PropTypes.func,
+};
 
 export default Button;

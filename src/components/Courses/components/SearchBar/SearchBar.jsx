@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { Button, Input } from 'common';
 import {
 	SEARCH_BUTTON_TEXT,
@@ -21,5 +23,11 @@ function SearchBar({ searchTerm, handleSearch, handleInputChange }) {
 		</div>
 	);
 }
+
+SearchBar.propTypes = {
+	searchTerm: PropTypes.string.isRequired,
+	handleSearch: PropTypes.func.isRequired,
+	handleInputChange: PropTypes.func.isRequired,
+};
 
 export default SearchBar;

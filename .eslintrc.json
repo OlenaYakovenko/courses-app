@@ -60,6 +60,13 @@
             "custom": "ignore",
             "explicitSpread": "ignore"            
         }],
-        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+        "react/require-default-props": [
+            "error", 
+            {
+              "forbidDefaultForRequired": true,        
+              "functions": "defaultArguments" 
+            }
+          ]
     } 
 } 

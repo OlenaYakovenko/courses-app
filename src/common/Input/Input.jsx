@@ -1,12 +1,13 @@
+import { PropTypes } from 'prop-types';
 import styles from './Input.module.css';
 
 function Input({
-	id,
+	id = '',
 	type = 'text',
-	labelText,
-	placeholderText,
-	value,
-	onChange,
+	labelText = '',
+	placeholderText = '',
+	value = null,
+	onChange = null,
 	required = false,
 }) {
 	return (
@@ -26,5 +27,15 @@ function Input({
 		</div>
 	);
 }
+
+Input.propTypes = {
+	id: PropTypes.string,
+	type: PropTypes.string,
+	labelText: PropTypes.string,
+	placeholderText: PropTypes.string,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	onChange: PropTypes.func,
+	required: PropTypes.bool,
+};
 
 export default Input;

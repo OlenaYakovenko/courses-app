@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+
+import PropTypes from 'prop-types';
+
 import {
 	BASE_URL,
 	EMAIL_INPUT_PLACEHOLDER_TEXT,
@@ -9,7 +12,9 @@ import {
 	PASSWORD_INPUT_PLACEHOLDER_TEXT,
 	PASSWORD_LABEL_TEXT,
 } from 'constants.js';
+
 import { Button, Input } from 'common';
+
 import { setLocalStorage } from 'helpers/localStorageHelper';
 
 import styles from 'components/Login/Login.module.css';
@@ -89,4 +94,7 @@ function Login({ setUser }) {
 	);
 }
 
+Login.propTypes = {
+	setUser: PropTypes.func.isRequired,
+};
 export default Login;

@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
+import PropTypes from 'prop-types';
+
 import { deleteLocalStorage } from 'helpers/localStorageHelper';
 
 import { Button } from 'common';
@@ -8,7 +10,7 @@ import { LOGOUT_BUTTON_TEXT } from 'constants.js';
 
 import styles from 'components/Header/Header.module.css';
 
-function Header({ user, token, setUser }) {
+function Header({ user, token = null, setUser }) {
 	const navigation = useNavigate();
 
 	const handleLogout = () => {
@@ -29,4 +31,14 @@ function Header({ user, token, setUser }) {
 	);
 }
 
+Header.propTypes = {
+	user: PropTypes.shape({
+		isAuth: PropTypes.bool.isRequired,
+		name: PropTypes.string.isRequired,
+		email: PropTypes.string.isRequired,
+		token: PropTypes.string.isRequired,
+	}).isRequired,
+	token: PropTypes.string,
+	setUser: PropTypes.func.isRequired,
+};
 export default Header;

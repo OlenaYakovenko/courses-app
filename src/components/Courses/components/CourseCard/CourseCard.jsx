@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
+import { PropTypes } from 'prop-types';
+
 import { Button } from 'common';
 import pipeDuration from 'helpers/pipeDuration';
 import { SHOW_COURSE_BUTTON_TEXT } from 'constants.js';
@@ -45,5 +47,14 @@ function CourseCard({
 		</article>
 	);
 }
+
+CourseCard.propTypes = {
+	id: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
+	authorsNames: PropTypes.string.isRequired,
+	creationDate: PropTypes.string.isRequired,
+	duration: PropTypes.number.isRequired,
+};
 
 export default CourseCard;

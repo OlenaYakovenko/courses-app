@@ -1,6 +1,8 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
+import PropTypes from 'prop-types';
+
 import { getLocalStorage } from 'helpers/localStorageHelper';
 import { Header } from 'components';
 
@@ -28,4 +30,13 @@ function Main({ user, setUser }) {
 	);
 }
 
+Main.propTypes = {
+	user: PropTypes.shape({
+		isAuth: PropTypes.bool.isRequired,
+		name: PropTypes.string.isRequired,
+		email: PropTypes.string.isRequired,
+		token: PropTypes.string.isRequired,
+	}).isRequired,
+	setUser: PropTypes.func.isRequired,
+};
 export default Main;
