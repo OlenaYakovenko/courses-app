@@ -55,11 +55,8 @@
                 "message": "Unexpected property on console object was called"
             }
         ],
-        "react/jsx-props-no-spreading": [1, {
-            "html": "enforce",
-            "custom": "ignore",
-            "explicitSpread": "ignore"            
-        }],
+        "react/jsx-props-no-spreading": "off",
+        "react/button-has-type": "off",
         "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
     } 
 } 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import {
 	mockedCoursesList,
@@ -8,49 +8,22 @@ import {
 import { Button } from 'common';
 import { CourseCard, SearchBar } from 'components/Courses/components';
 
-import styles from 'components/Courses/Courses.module.css';
+import styles from './Courses.module.css';
 
 function Courses({ setIsAddingCourse }) {
 	const [courses, setCourses] = useState([]);
-	const [searchTerm, setSearchTerm] = useState('');
 
 	useEffect(() => {
 		setCourses(mockedCoursesList);
 	}, []);
 
-	const handleInputChange = (e) => {
-		const value = e.target.value.trim();
-		if (!value) {
-			setCourses(mockedCoursesList);
-		}
-		setSearchTerm(value);
-	};
-
-	const handleSearch = (query) => {
-		if (!query) {
-			setSearchTerm('');
-		} else {
-			const newCourses = mockedCoursesList.filter(
-				({ id, title }) =>
-					id.toLowerCase().includes(query.toLowerCase()) ||
-					title.toLowerCase().includes(query.toLowerCase())
-			);
-			setCourses(newCourses);
-		}
-	};
+	const handleAddCourse = useCallback(() => setIsAddingCourse(true), []);
 
 	return (
 		<section>
 			<header className={styles['courses-header']}>
-				<SearchBar
-					handleSearch={handleSearch}
-					handleInputChange={handleInputChange}
-					searchTerm={searchTerm}
-				/>
-				<Button
-					text={ADD_COURSE_BUTTON_TEXT}
-					onClick={() => setIsAddingCourse(true)}
-				/>
+				<SearchBar setCourses={setCourses} />
+				<Button text={ADD_COURSE_BUTTON_TEXT} onClick={handleAddCourse} />
 			</header>
 			{courses.map((course) => {
 				const authorsNames = course.authors
