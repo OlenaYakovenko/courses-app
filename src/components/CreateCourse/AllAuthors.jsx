@@ -11,7 +11,7 @@ function AllAuthors({
 }) {
 	const handleAddAuthor = useCallback(
 		(e) => {
-            const authorID = e.currentTarget.getAttribute('data-author-id');
+			const authorID = e.currentTarget.getAttribute('data-author-id');
 			const currentAuthor = authorsList.find(({ id }) => id === authorID);
 			const newCourseAuthorsList = [...courseAuthorsList, currentAuthor];
 			const leftAuhtors = authorsList.filter(({ id }) => id !== authorID);
