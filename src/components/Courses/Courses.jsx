@@ -17,7 +17,10 @@ function Courses({ setIsAddingCourse }) {
 		setCourses(mockedCoursesList);
 	}, []);
 
-	const handleAddCourse = useCallback(() => setIsAddingCourse(true), []);
+	const handleAddCourse = useCallback(
+		() => setIsAddingCourse(true),
+		[setIsAddingCourse]
+	);
 
 	return (
 		<section>

@@ -28,40 +28,52 @@ function CreateCourse({ setIsAddingCourse }) {
 	const [courseAuthorsList, setCourseAuthorsList] = useState([]);
 	const [courseDuration, setCourseDuration] = useState(0);
 
-	const handleTitle = useCallback((e) => {
-		setCourseTitle(e.target.value);
-	}, []);
+	const handleTitle = useCallback(
+		(e) => {
+			setCourseTitle(e.target.value);
+		},
+		[setCourseTitle]
+	);
 
 	const handleDescription = useCallback(
 		(e) => setDescriptionText(e.target.value),
-		[]
+		[setDescriptionText]
 	);
 
-	const handleCreateCourse = (e) => {
-		e.preventDefault();
-		const courseID = uuidv4();
+	const handleCreateCourse = useCallback(
+		(e) => {
+			e.preventDefault();
+			const courseID = uuidv4();
 
-		const createdCourse = {
-			id: courseID,
-			title: courseTitle,
-			description: descriptionText,
-			creationDate: dateGenerator(),
-			duration: courseDuration,
-			authors: courseAuthorsList.map(({ id }) => id),
-		};
+			const createdCourse = {
+				id: courseID,
+				title: courseTitle,
+				description: descriptionText,
+				creationDate: dateGenerator(),
+				duration: courseDuration,
+				authors: courseAuthorsList.map(({ id }) => id),
+			};
 
-		const { title, description, duration, authors } = createdCourse;
-		if (!title || !description || !duration || authors.length < 1) {
-			alert('Please, fill in all fields');
-		} else if (description.length < 2) {
-			alert('Description is too short');
-		} else if (duration < 1) {
-			alert('Duration has to be more than zero');
-		} else {
-			mockedCoursesList.push(createdCourse);
-			setIsAddingCourse(false);
-		}
-	};
+			const { title, description, duration, authors } = createdCourse;
+			if (!title || !description || !duration || authors.length < 1) {
+				alert('Please, fill in all fields');
+			} else if (description.length < 2) {
+				alert('Description is too short');
+			} else if (duration < 1) {
+				alert('Duration has to be more than zero');
+			} else {
+				mockedCoursesList.push(createdCourse);
+				setIsAddingCourse(false);
+			}
+		},
+		[
+			courseAuthorsList,
+			courseDuration,
+			courseTitle,
+			descriptionText,
+			setIsAddingCourse,
+		]
+	);
 
 	const inputTitleProps = {
 		id: 'title',

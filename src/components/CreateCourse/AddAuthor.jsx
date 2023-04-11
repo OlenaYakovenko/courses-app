@@ -31,7 +31,7 @@ function AddAuthor({ setAuthorsList, authorsList }) {
 		setAuthorsList(newAuthorsList);
 		setNewAuthorName('');
 		mockedAuthorsList.push(newAuthor);
-	}, [setAuthorsList, newAuthorName]);
+	}, [setAuthorsList, newAuthorName, authorsList]);
 
 	return (
 		<fieldset className={styles['form-add']}>

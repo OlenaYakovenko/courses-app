@@ -11,13 +11,16 @@ import styles from './SearchBar.module.css';
 function SearchBar({ setCourses }) {
 	const [searchTerm, setSearchTerm] = useState('');
 
-	const handleInputChange = useCallback((e) => {
-		const value = e.target.value.trim();
-		if (!value) {
-			setCourses(mockedCoursesList);
-		}
-		setSearchTerm(value);
-	}, []);
+	const handleInputChange = useCallback(
+		(e) => {
+			const value = e.target.value.trim();
+			if (!value) {
+				setCourses(mockedCoursesList);
+			}
+			setSearchTerm(value);
+		},
+		[setCourses]
+	);
 
 	const handleSearch = useCallback(() => {
 		const query = searchTerm;
@@ -31,7 +34,7 @@ function SearchBar({ setCourses }) {
 			);
 			setCourses(newCourses);
 		}
-	}, [searchTerm]);
+	}, [searchTerm, setCourses]);
 
 	return (
 		<div className={styles['search-bar']}>

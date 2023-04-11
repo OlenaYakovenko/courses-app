@@ -4,17 +4,21 @@ import {
 	DURATION_INPUT_PLACEHOLDER_TEXT,
 } from 'constants.js';
 import pipeDuration from 'helpers/pipeDuration';
+import { useCallback } from 'react';
 import styles from './CourseDuration.module.css';
 
 function CourseDuration({ courseDuration, setCourseDuration }) {
-	const handleDuration = (e) => {
-		const value = +e.target.value;
-		if (!value) {
-			setCourseDuration(0);
-		} else {
-			setCourseDuration(value);
-		}
-	};
+	const handleDuration = useCallback(
+		(e) => {
+			const value = +e.target.value;
+			if (!value) {
+				setCourseDuration(0);
+			} else {
+				setCourseDuration(value);
+			}
+		},
+		[setCourseDuration]
+	);
 	return (
 		<fieldset className={styles['form-duration']}>
 			<legend>Duration</legend>
