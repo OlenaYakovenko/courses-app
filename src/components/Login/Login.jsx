@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -17,42 +17,58 @@ import { Button, Input } from 'common';
 
 import { setLocalStorage } from 'helpers/localStorageHelper';
 
-import styles from 'components/Login/Login.module.css';
+import styles from './Login.module.css';
 
-function Login({ setUser }) {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+function Login({ setUser, isAuth }) {
 	const [errorMessage, setErrorMessage] = useState('');
-
+	const [loginCredentials, setLoginCredentials] = useState({
+		email: '',
+		password: '',
+	});
+	const { email, password } = loginCredentials;
 	const navigation = useNavigate();
 
-	const handleLogin = async (e) => {
-		e.preventDefault();
+	useEffect(() => {
+		if (isAuth) navigation('/courses');
+	}, [navigation, isAuth]);
 
-		const user = {
-			email,
-			password,
-		};
-		try {
-			const response = await axios.post(`${BASE_URL}login`, user);
-			setLocalStorage('userToken', response.data.result);
-			// eslint-disable-next-line
-			const { name, email } = response.data.user;
-			setUser({ isAuth: true, name, email, token: response.data.result });
-			navigation('/courses');
-		} catch (err) {
-			console.log(err);
-			if (err.response) {
-				if (err.response.status === 400) {
-					setErrorMessage(err.response?.data.result);
+	const handleCredChange = useCallback((e) => {
+		setLoginCredentials((prevState) => ({
+			...prevState,
+			[e.target.name]: e.target.value,
+		}));
+	}, []);
+
+	const handleLogin = useCallback(
+		async (e) => {
+			e.preventDefault();
+
+			const user = {
+				email,
+				password,
+			};
+			try {
+				const response = await axios.post(`${BASE_URL}login`, user);
+				setLocalStorage('userToken', response.data.result);
+
+				const { name, email: userEmail } = response.data.user;
+				setUser({ isAuth: true, name, userEmail, token: response.data.result });
+				navigation('/courses');
+			} catch (err) {
+				console.log(err);
+				if (err.response) {
+					if (err.response.status === 400) {
+						setErrorMessage(err.response?.data.result);
+						return;
+					}
+					setErrorMessage(err.message);
 					return;
 				}
 				setErrorMessage(err.message);
-				return;
 			}
-			setErrorMessage(err.message);
-		}
-	};
+		},
+		[navigation, setUser, email, password]
+	);
 
 	return (
 		<div className={styles['login-form-container']}>
@@ -67,7 +83,7 @@ function Login({ setUser }) {
 						labelText={EMAIL_LABEL_TEXT}
 						placeholderText={EMAIL_INPUT_PLACEHOLDER_TEXT}
 						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={handleCredChange}
 					/>
 				</div>
 				<div className={styles['input-container']}>
@@ -78,7 +94,7 @@ function Login({ setUser }) {
 						labelText={PASSWORD_LABEL_TEXT}
 						placeholderText={PASSWORD_INPUT_PLACEHOLDER_TEXT}
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={handleCredChange}
 					/>
 				</div>
 				<div className={styles['btn-container']}>
@@ -86,8 +102,7 @@ function Login({ setUser }) {
 				</div>
 			</form>
 			<p>
-				{/* eslint-disable-next-line */}
-				If you don't have an account you can{' '}
+				If you do not have an account you can{' '}
 				<Link to='/registration'>Registrate</Link>
 			</p>
 		</div>
@@ -96,5 +111,6 @@ function Login({ setUser }) {
 
 Login.propTypes = {
 	setUser: PropTypes.func.isRequired,
+	isAuth: PropTypes.bool.isRequired,
 };
 export default Login;

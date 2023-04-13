@@ -6,7 +6,8 @@ import { Button } from 'common';
 import pipeDuration from 'helpers/pipeDuration';
 import { SHOW_COURSE_BUTTON_TEXT } from 'constants.js';
 
-import styles from 'components/Courses/components/CourseCard/CourseCard.module.css';
+import { useCallback } from 'react';
+import styles from './CourseCard.module.css';
 
 function CourseCard({
 	id,
@@ -17,6 +18,10 @@ function CourseCard({
 	duration,
 }) {
 	const navigation = useNavigate();
+
+	const handleShowCourse = useCallback(() => {
+		navigation(`/courses/${id}`);
+	}, [id, navigation]);
 
 	return (
 		<article className={styles['course-card']}>
@@ -38,10 +43,7 @@ function CourseCard({
 					{creationDate}
 				</p>
 				<div className={styles['info-center']}>
-					<Button
-						text={SHOW_COURSE_BUTTON_TEXT}
-						onClick={() => navigation(`/courses/${id}`)}
-					/>
+					<Button text={SHOW_COURSE_BUTTON_TEXT} onClick={handleShowCourse} />
 				</div>
 			</div>
 		</article>

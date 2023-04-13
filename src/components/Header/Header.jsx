@@ -10,7 +10,7 @@ import { LOGOUT_BUTTON_TEXT } from 'constants.js';
 
 import styles from 'components/Header/Header.module.css';
 
-function Header({ user, token = null, setUser }) {
+function Header({ user = {}, setUser }) {
 	const navigation = useNavigate();
 
 	const handleLogout = () => {
@@ -21,7 +21,7 @@ function Header({ user, token = null, setUser }) {
 	return (
 		<header className={styles.header}>
 			<Logo />
-			{(user.isAuth || token) && (
+			{user.isAuth && (
 				<div className={styles['header-write']}>
 					<p className={styles.name}>{user.name}</p>
 					<Button text={LOGOUT_BUTTON_TEXT} onClick={handleLogout} />
@@ -34,11 +34,10 @@ function Header({ user, token = null, setUser }) {
 Header.propTypes = {
 	user: PropTypes.shape({
 		isAuth: PropTypes.bool.isRequired,
-		name: PropTypes.string.isRequired,
-		email: PropTypes.string.isRequired,
-		token: PropTypes.string.isRequired,
-	}).isRequired,
-	token: PropTypes.string,
+		name: PropTypes.string,
+		email: PropTypes.string,
+		token: PropTypes.string,
+	}),
 	setUser: PropTypes.func.isRequired,
 };
 export default Header;

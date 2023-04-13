@@ -6,9 +6,10 @@ function Input({
 	type = 'text',
 	labelText = '',
 	placeholderText = '',
-	value = null,
+	value = '',
 	onChange = null,
 	required = false,
+	...otherProps
 }) {
 	return (
 		<div className={styles['input-group']}>
@@ -23,6 +24,7 @@ function Input({
 				className={styles.input}
 				required={required}
 				value={value}
+				{...otherProps}
 			/>
 		</div>
 	);

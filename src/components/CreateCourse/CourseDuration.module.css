@@ -1,0 +1,10 @@
+.form-duration input {
+    margin-bottom: 1.5rem;
+}
+.duration-info {
+    font-size: 1.2rem;
+}
+.duration-info span {
+    font-weight: bold;
+    font-size: 1.5rem;
+}

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input } from 'common';
 import {
@@ -15,38 +15,50 @@ import {
 import styles from 'components/Registration/Registration.module.css';
 
 function Registration() {
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [registrationCredentials, setRegistrationCredentials] = useState({
+		name: '',
+		email: '',
+		password: '',
+	});
+	const { name, email, password } = registrationCredentials;
 	const [errors, setErrors] = useState('');
 	const navigation = useNavigate();
 
-	const handleRegistration = async (e) => {
-		e.preventDefault();
+	const handleCredChange = useCallback((e) => {
+		setRegistrationCredentials((prevState) => ({
+			...prevState,
+			[e.target.name]: e.target.value,
+		}));
+	}, []);
 
-		const user = {
-			name,
-			email,
-			password,
-		};
-		try {
-			const response = await axios.post(`${BASE_URL}register`, user);
-			console.log(response);
-			navigation('/login');
-		} catch (error) {
-			console.log(error);
-			setErrors(error.response.data.errors);
-		}
-	};
+	const handleRegistration = useCallback(
+		async (e) => {
+			e.preventDefault();
+
+			const user = {
+				name,
+				email,
+				password,
+			};
+			try {
+				const response = await axios.post(`${BASE_URL}register`, user);
+				console.log(response);
+				navigation('/login');
+			} catch (error) {
+				console.log(error);
+				setErrors(error.response.data.errors);
+			}
+		},
+		[name, email, password, navigation]
+	);
 
 	return (
 		<div className={styles['registration-form-container']}>
 			<h2>Registration</h2>
 			{errors && (
 				<div className={styles.errors}>
-					{errors.map((item, index) => (
-						/* eslint-disable-next-line */
-						<p key={index}>{item}</p>
+					{errors.map((item) => (
+						<p key={item}>{item}</p>
 					))}
 				</div>
 			)}
@@ -62,7 +74,7 @@ function Registration() {
 						labelText={NAME_LABEL_TEXT}
 						placeholderText={NAME_INPUT_PLACEHOLDER_TEXT}
 						value={name}
-						onChange={(e) => setName(e.target.value)}
+						onChange={handleCredChange}
 					/>
 				</div>
 				<div className={styles['input-container']}>
@@ -73,7 +85,7 @@ function Registration() {
 						labelText={EMAIL_LABEL_TEXT}
 						placeholderText={EMAIL_INPUT_PLACEHOLDER_TEXT}
 						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={handleCredChange}
 					/>
 				</div>
 				<div className={styles['input-container']}>
@@ -84,7 +96,7 @@ function Registration() {
 						labelText={PASSWORD_LABEL_TEXT}
 						placeholderText={PASSWORD_INPUT_PLACEHOLDER_TEXT}
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={handleCredChange}
 					/>
 				</div>
 				<div className={styles['btn-container']}>

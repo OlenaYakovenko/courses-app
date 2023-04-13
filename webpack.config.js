@@ -30,7 +30,7 @@ module.exports = merge(devServer, resolve, innerModule(mode), {
 	mode,
 	plugins,
 	target,
-	entry: './src/index.js',
+	entry: './src/index.jsx',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		assetModuleFilename: 'assets/[hash][ext][query]',
