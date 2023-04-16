@@ -1,15 +1,13 @@
 import { Outlet } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
-
 import { Header } from 'components';
 
 import styles from 'layout/Main.module.css';
 
-function MainLayout({ user = {}, setUser }) {
+function MainLayout() {
 	return (
 		<div className={styles.wrapper}>
-			<Header user={user} setUser={setUser} />
+			<Header />
 			<main className={styles.main}>
 				<Outlet />
 			</main>
@@ -17,13 +15,4 @@ function MainLayout({ user = {}, setUser }) {
 	);
 }
 
-MainLayout.propTypes = {
-	user: PropTypes.shape({
-		isAuth: PropTypes.bool.isRequired,
-		name: PropTypes.string,
-		email: PropTypes.string,
-		token: PropTypes.string,
-	}).isRequired,
-	setUser: PropTypes.func.isRequired,
-};
 export default MainLayout;

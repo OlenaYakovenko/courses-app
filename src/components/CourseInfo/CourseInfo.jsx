@@ -1,13 +1,20 @@
 import { Link, useParams } from 'react-router-dom';
-import { mockedAuthorsList, mockedCoursesList } from 'constants.js';
+import { useSelector } from 'react-redux';
+
 import pipeDuration from 'helpers/pipeDuration';
+
+import selectCourses from 'store/courses/coursesSelectors';
+import selectAuthors from 'store/authors/authorsSelectors';
 
 import styles from 'components/CourseInfo/CourseInfo.module.css';
 
 function CourseInfo() {
 	const { courseId } = useParams();
 
-	const course = mockedCoursesList.find(({ id }) => id === courseId);
+	const courses = useSelector(selectCourses);
+	const authorsAll = useSelector(selectAuthors);
+	const course = courses.find(({ id }) => id === courseId);
+
 	const { id, title, description, duration, creationDate, authors } = course;
 
 	return (
@@ -32,7 +39,7 @@ function CourseInfo() {
 					<div>
 						<p className={styles.authors}>Authors:</p>
 						{authors.map((authorID) =>
-							mockedAuthorsList
+							authorsAll
 								.filter((author) => author.id === authorID)
 								.map((author) => <p key={author.id}>{author.name}</p>)
 						)}

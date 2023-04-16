@@ -4,29 +4,29 @@ import { PropTypes } from 'prop-types';
 
 import { Button } from 'common';
 import { ADD_AUTHOR_BUTTON_TEXT } from 'constants.js';
+
+import { useSelector } from 'react-redux';
+import selectAuthors from 'store/authors/authorsSelectors';
 import styles from './AllAuthors.module.css';
 
-function AllAuthors({
-	authorsList,
-	courseAuthorsList,
-	setCourseAuthorsList,
-	setAuthorsList,
-}) {
+function AllAuthors({ courseAuthorsList, setCourseAuthorsList }) {
+	const authorsList = useSelector(selectAuthors);
+
+	const renderedAuthors = authorsList.filter(
+		({ id }) => !courseAuthorsList.includes(id)
+	);
 	const handleAddAuthor = useCallback(
 		(e) => {
 			const authorID = e.currentTarget.getAttribute('data-author-id');
-			const currentAuthor = authorsList.find(({ id }) => id === authorID);
-			const newCourseAuthorsList = [...courseAuthorsList, currentAuthor];
-			const leftAuhtors = authorsList.filter(({ id }) => id !== authorID);
+			const newCourseAuthorsList = [...courseAuthorsList, authorID];
 			setCourseAuthorsList(newCourseAuthorsList);
-			setAuthorsList(leftAuhtors);
 		},
-		[authorsList, setAuthorsList, setCourseAuthorsList, courseAuthorsList]
+		[setCourseAuthorsList, courseAuthorsList]
 	);
 	return (
 		<fieldset className={styles['form-authors']}>
 			<legend>Authors</legend>
-			{authorsList.map((author) => (
+			{renderedAuthors.map((author) => (
 				<p key={author.id} className={styles.author}>
 					<span>{author.name}</span>
 					<Button
@@ -41,19 +41,7 @@ function AllAuthors({
 }
 
 AllAuthors.propTypes = {
-	authorsList: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			name: PropTypes.string,
-		})
-	).isRequired,
-	courseAuthorsList: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			name: PropTypes.string,
-		})
-	).isRequired,
+	courseAuthorsList: PropTypes.arrayOf(PropTypes.string).isRequired,
 	setCourseAuthorsList: PropTypes.func.isRequired,
-	setAuthorsList: PropTypes.func.isRequired,
 };
 export default AllAuthors;

@@ -1,19 +1,20 @@
 import { useCallback, useState } from 'react';
-import { PropTypes } from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Button, Input } from 'common';
 import {
 	CREATE_AUTHOR_BUTTON_TEXT,
 	AUTHOR_LABEL_TEXT,
-	mockedAuthorsList,
 	AUTHOR_INPUT_PLACEHOLDER_TEXT,
 } from 'constants';
 
+import { saveNewAuthor } from 'store/authors/authorsSlice';
 import styles from './AddAuthor.module.css';
 
-function AddAuthor({ setAuthorsList, authorsList }) {
+function AddAuthor() {
 	const [newAuthorName, setNewAuthorName] = useState('');
+	const dispatch = useDispatch();
 
 	const handleAuthorName = useCallback(
 		(e) => {
@@ -29,11 +30,9 @@ function AddAuthor({ setAuthorsList, authorsList }) {
 		}
 		const authorID = uuidv4();
 		const newAuthor = { id: authorID, name: newAuthorName };
-		const newAuthorsList = [...authorsList, newAuthor];
-		setAuthorsList(newAuthorsList);
+		dispatch(saveNewAuthor(newAuthor));
 		setNewAuthorName('');
-		mockedAuthorsList.push(newAuthor);
-	}, [setAuthorsList, newAuthorName, authorsList]);
+	}, [dispatch, newAuthorName]);
 
 	return (
 		<fieldset className={styles['form-add']}>
@@ -52,13 +51,4 @@ function AddAuthor({ setAuthorsList, authorsList }) {
 	);
 }
 
-AddAuthor.propTypes = {
-	authorsList: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			name: PropTypes.string,
-		})
-	).isRequired,
-	setAuthorsList: PropTypes.func.isRequired,
-};
 export default AddAuthor;

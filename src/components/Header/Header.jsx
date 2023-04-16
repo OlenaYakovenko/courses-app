@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { deleteLocalStorage } from 'helpers/localStorageHelper';
 
@@ -8,14 +7,18 @@ import { Button } from 'common';
 import Logo from 'components/Header/components/Logo/Logo';
 import { LOGOUT_BUTTON_TEXT } from 'constants.js';
 
-import styles from 'components/Header/Header.module.css';
+import selectUser from 'store/user/userSelectors';
+import { logout } from 'store/user/userSlice';
+import styles from './Header.module.css';
 
-function Header({ user = {}, setUser }) {
+function Header() {
 	const navigation = useNavigate();
+	const dispatch = useDispatch();
+	const user = useSelector(selectUser);
 
 	const handleLogout = () => {
 		deleteLocalStorage({ key: 'userToken' });
-		setUser({ isAuth: false, name: '', email: '', token: '' });
+		dispatch(logout({ isAuth: false, name: '', email: '', token: '' }));
 		navigation('/login');
 	};
 	return (
@@ -31,13 +34,4 @@ function Header({ user = {}, setUser }) {
 	);
 }
 
-Header.propTypes = {
-	user: PropTypes.shape({
-		isAuth: PropTypes.bool.isRequired,
-		name: PropTypes.string,
-		email: PropTypes.string,
-		token: PropTypes.string,
-	}),
-	setUser: PropTypes.func.isRequired,
-};
 export default Header;
