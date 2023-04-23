@@ -7,6 +7,7 @@ import { ADD_AUTHOR_BUTTON_TEXT } from 'constants.js';
 
 import { useSelector } from 'react-redux';
 import selectAuthors from 'store/authors/authorsSelectors';
+
 import styles from './AllAuthors.module.css';
 
 function AllAuthors({ courseAuthorsList, setCourseAuthorsList }) {
@@ -44,4 +45,5 @@ AllAuthors.propTypes = {
 	courseAuthorsList: PropTypes.arrayOf(PropTypes.string).isRequired,
 	setCourseAuthorsList: PropTypes.func.isRequired,
 };
+
 export default AllAuthors;

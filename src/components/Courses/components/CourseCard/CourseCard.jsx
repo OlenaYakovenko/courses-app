@@ -15,6 +15,7 @@ import selectAuthors from 'store/authors/authorsSelectors';
 
 import { removeCourse } from 'store/courses/coursesSlice';
 import { selectIsAdmin } from 'store/user/userSelectors';
+
 import styles from './CourseCard.module.css';
 
 function CourseCard({

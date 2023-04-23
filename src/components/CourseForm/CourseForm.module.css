@@ -43,35 +43,3 @@
 .form-grid fieldset {
     border: none;
 }
-
-
-.form-grid input {
-    width: 100%;
-}
-.form-add div {
-    margin-bottom: 1rem;
-}
-.btn-container{
-    text-align: center;
-}
-.form-authors {
-    padding-right: 4rem;
-}
-
-.author {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-.form-duration input {
-    margin-bottom: 1.5rem;
-}
-.duration-info {
-    font-size: 1.2rem;
-}
-.duration-info span {
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-

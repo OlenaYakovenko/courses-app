@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button } from 'common';
-import Logo from 'components/Header/components/Logo/Logo';
-import { LOGOUT_BUTTON_TEXT } from 'constants.js';
-
 import { selectUser } from 'store/user/userSelectors';
 import { logout } from 'store/user/userSlice';
+
+import { Button } from 'common';
+import { LOGOUT_BUTTON_TEXT } from 'constants.js';
+import Logo from './components/Logo/Logo';
+
 import styles from './Header.module.css';
 
 function Header() {
