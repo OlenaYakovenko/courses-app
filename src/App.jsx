@@ -35,10 +35,8 @@ function App() {
 			<Routes>
 				<Route element={<MainLayout />}>
 					<Route path='/' element={<PrivateRouter isAllowed={user.isAuth} />}>
-						<Route path='/courses'>
-							<Route index element={<Courses />} />
-							<Route path=':courseId' element={<CourseInfo />} />
-						</Route>
+						<Route path='/courses' element={<Courses />} />
+						<Route path='/courses/:courseId' element={<CourseInfo />} />
 					</Route>
 					<Route
 						path='/courses/add'
