@@ -1,0 +1,21 @@
+.btn {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #9700f5;
+    font-size: 1rem;
+    box-shadow: var(--light-shadow);
+    cursor: pointer;
+    text-transform: capitalize;
+    width: 10rem;
+}
+
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.btn:hover {
+    background-color: #e5c4fa;
+    box-shadow: var(--dark-shadow);
+}
