@@ -50,6 +50,7 @@ export const CREATE_COURSE_BUTTON_TEXT = 'create course';
 export const CREATE_AUTHOR_BUTTON_TEXT = 'create author';
 export const ADD_AUTHOR_BUTTON_TEXT = 'add author';
 export const DELETE_AUTHOR_BUTTON_TEXT = 'delete author';
+export const UPDATE_COURSE_BUTTON_TEXT = 'update course';
 
 export const LOGIN_BUTTON_TEXT = 'login';
 export const LOGOUT_BUTTON_TEXT = 'logout';

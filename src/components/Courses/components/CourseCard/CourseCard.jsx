@@ -13,7 +13,8 @@ import trash from 'assets/trash-can-solid.svg';
 
 import selectAuthors from 'store/authors/authorsSelectors';
 
-import { deleteCourse } from 'store/courses/coursesSlice';
+import { removeCourse } from 'store/courses/coursesSlice';
+import { selectIsAdmin } from 'store/user/userSelectors';
 import styles from './CourseCard.module.css';
 
 function CourseCard({
@@ -37,17 +38,19 @@ function CourseCard({
 		)
 		.join(', ');
 
+	const isAdmin = useSelector(selectIsAdmin);
+
 	const handleShowCourse = useCallback(() => {
 		navigation(`/courses/${id}`);
 	}, [id, navigation]);
 
-	const handleDeleteCourse = useCallback(
-		(e) => {
-			const courseToBeDeleted = e.currentTarget.getAttribute('data-course-id');
-			dispatch(deleteCourse(courseToBeDeleted));
-		},
-		[dispatch]
-	);
+	const handleDeleteCourse = useCallback(() => {
+		dispatch(removeCourse(id));
+	}, [dispatch, id]);
+
+	const handleUpdateCourse = useCallback(() => {
+		navigation(`/courses/update/${id}`);
+	}, [navigation, id]);
 
 	return (
 		<article className={styles['course-card']}>
@@ -70,12 +73,12 @@ function CourseCard({
 				</p>
 				<div className={styles['info-center']}>
 					<Button text={SHOW_COURSE_BUTTON_TEXT} onClick={handleShowCourse} />
-					<Button icon={pen} />
-					<Button
-						icon={trash}
-						data-course-id={id}
-						onClick={handleDeleteCourse}
-					/>
+					{isAdmin && (
+						<>
+							<Button icon={pen} onClick={handleUpdateCourse} />
+							<Button icon={trash} onClick={handleDeleteCourse} />
+						</>
+					)}
 				</div>
 			</div>
 		</article>

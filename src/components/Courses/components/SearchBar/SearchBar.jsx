@@ -8,7 +8,7 @@ import {
 
 import { useDispatch, useSelector } from 'react-redux';
 import selectCourses from 'store/courses/coursesSelectors';
-import { getCourses } from 'store/courses/coursesSlice';
+import { setCourses } from 'store/courses/coursesSlice';
 import styles from './SearchBar.module.css';
 
 function SearchBar() {
@@ -22,7 +22,7 @@ function SearchBar() {
 		(e) => {
 			const value = e.target.value.trim();
 			if (!value) {
-				dispatch(getCourses(allCourses));
+				dispatch(setCourses(allCourses));
 			}
 			setSearchTerm(value);
 		},
@@ -40,7 +40,7 @@ function SearchBar() {
 					title.toLowerCase().includes(query.toLowerCase())
 			);
 			setAllCourses(courses);
-			dispatch(getCourses(newCourses));
+			dispatch(setCourses(newCourses));
 		}
 	}, [dispatch, courses, searchTerm]);
 

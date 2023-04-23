@@ -10,11 +10,11 @@ import {
 	PASSWORD_LABEL_TEXT,
 } from 'constants.js';
 
-import { Button, Input } from 'common';
+import { Button, Input, Spinner } from 'common';
 
-import selectUser from 'store/user/userSelectors';
-import { setCurrentUser } from 'store/user/userSlice';
-import api from 'store/services';
+import { selectUserState } from 'store/user/userSelectors';
+
+import { login, reset } from 'store/user/userSlice';
 import styles from './Login.module.css';
 
 function Login() {
@@ -27,11 +27,26 @@ function Login() {
 	const navigation = useNavigate();
 	const dispatch = useDispatch();
 
-	const currentUser = useSelector(selectUser);
+	const { user, isLoading, isSuccess, isError, message } =
+		useSelector(selectUserState);
 
 	useEffect(() => {
-		if (currentUser.isAuth) navigation('/courses');
-	}, [navigation, currentUser.isAuth]);
+		if (user.isAuth) {
+			navigation('/courses');
+		}
+		if (isError) {
+			setErrorMessage(message);
+		}
+		dispatch(reset());
+	}, [
+		navigation,
+		dispatch,
+		setErrorMessage,
+		user.isAuth,
+		isSuccess,
+		isError,
+		message,
+	]);
 
 	const handleCredChange = useCallback((e) => {
 		setLoginCredentials((prevState) => ({
@@ -43,39 +58,17 @@ function Login() {
 	const handleLogin = useCallback(
 		async (e) => {
 			e.preventDefault();
-
-			const user = {
+			const userData = {
 				email,
 				password,
 			};
-			try {
-				const response = await api.login(user);
-				const { name, email: userEmail } = response.user;
-				dispatch(
-					setCurrentUser({
-						isAuth: true,
-						name,
-						userEmail,
-						token: response.result,
-					})
-				);
-				navigation('/courses');
-			} catch (err) {
-				console.log(err);
-				if (err.response) {
-					if (err.response.status === 400) {
-						setErrorMessage(err.response?.data.result);
-						return;
-					}
-					setErrorMessage(err.message);
-					return;
-				}
-				setErrorMessage(err.message);
-			}
+			dispatch(login(userData));
 		},
-		[navigation, dispatch, email, password]
+		[dispatch, email, password]
 	);
-
+	if (isLoading) {
+		return <Spinner />;
+	}
 	return (
 		<div className={styles['login-form-container']}>
 			<h2>Login</h2>

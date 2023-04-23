@@ -1,5 +1,7 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Button, Input } from 'common';
 import {
 	EMAIL_INPUT_PLACEHOLDER_TEXT,
@@ -10,8 +12,8 @@ import {
 	PASSWORD_LABEL_TEXT,
 	REGISTRATION_BUTTON_TEXT,
 } from 'constants.js';
-import api from 'store/services';
 
+import { register, reset } from 'store/user/userSlice';
 import styles from './Registration.module.css';
 
 function Registration() {
@@ -21,8 +23,19 @@ function Registration() {
 		password: '',
 	});
 	const { name, email, password } = registrationCredentials;
-	const [errors, setErrors] = useState('');
 	const navigation = useNavigate();
+	const dispatch = useDispatch();
+	const userState = useSelector((state) => state.user);
+	const errors = useSelector(
+		(state) => Array.isArray(state.user.message) && state.user.message
+	);
+
+	useEffect(() => {
+		if (userState.isSuccess) {
+			navigation('/login');
+		}
+		dispatch(reset());
+	}, [navigation, dispatch, userState.isSuccess]);
 
 	const handleCredChange = useCallback((e) => {
 		setRegistrationCredentials((prevState) => ({
@@ -35,21 +48,15 @@ function Registration() {
 		async (e) => {
 			e.preventDefault();
 
-			const user = {
+			const userData = {
 				name,
 				email,
 				password,
 			};
-			try {
-				const response = await api.register(user);
-				console.log(response);
-				navigation('/login');
-			} catch (error) {
-				console.log(error);
-				setErrors(error.response.data.errors);
-			}
+
+			dispatch(register(userData));
 		},
-		[name, email, password, navigation]
+		[name, email, password, dispatch]
 	);
 
 	return (
