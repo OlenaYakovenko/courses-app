@@ -3,8 +3,10 @@ import { useCallback } from 'react';
 import { PropTypes } from 'prop-types';
 import { Button } from 'common';
 import { DELETE_AUTHOR_BUTTON_TEXT } from 'constants.js';
+
 import { useSelector } from 'react-redux';
 import selectAuthors from 'store/authors/authorsSelectors';
+
 import styles from './CourseAuthors.module.css';
 
 function CourseAuthors({ courseAuthorsList, setCourseAuthorsList }) {
@@ -48,4 +50,5 @@ CourseAuthors.propTypes = {
 	courseAuthorsList: PropTypes.arrayOf(PropTypes.string).isRequired,
 	setCourseAuthorsList: PropTypes.func.isRequired,
 };
+
 export default CourseAuthors;

@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteLocalStorage } from 'helpers/localStorageHelper';
 
 import { Button } from 'common';
-import Logo from 'components/Header/components/Logo/Logo';
 import { LOGOUT_BUTTON_TEXT } from 'constants.js';
+import Logo from './components/Logo/Logo';
 
 import selectUser from 'store/user/userSelectors';
 import { logout } from 'store/user/userSlice';
+
 import styles from './Header.module.css';
 
 function Header() {

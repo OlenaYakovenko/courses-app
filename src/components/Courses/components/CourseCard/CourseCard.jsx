@@ -14,6 +14,7 @@ import trash from 'assets/trash-can-solid.svg';
 import selectAuthors from 'store/authors/authorsSelectors';
 
 import { deleteCourse } from 'store/courses/coursesSlice';
+
 import styles from './CourseCard.module.css';
 
 function CourseCard({
