@@ -1,0 +1,25 @@
+.login-form-container {
+    display: grid;
+    place-items: center;
+}
+@media (min-width: 768px) {
+    .login-form {
+        width: 33.333%;
+    }
+}
+.error {
+    margin: 1.5rem 0;
+    border: 1px solid red;
+    background-color: rgb(245, 128, 128);
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: center;
+}
+.btn-container {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.input-container {
+    margin-bottom: 1rem;
+}

@@ -1,6 +1,9 @@
-import { Button } from 'common';
-import { DELETE_AUTHOR_BUTTON_TEXT } from 'constants';
 import { useCallback } from 'react';
+
+import { PropTypes } from 'prop-types';
+import { Button } from 'common';
+import { DELETE_AUTHOR_BUTTON_TEXT } from 'constants.js';
+
 import styles from './CourseAuthors.module.css';
 
 function CourseAuthors({
@@ -44,5 +47,22 @@ function CourseAuthors({
 		</fieldset>
 	);
 }
+
+CourseAuthors.propTypes = {
+	authorsList: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	).isRequired,
+	courseAuthorsList: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	).isRequired,
+	setCourseAuthorsList: PropTypes.func.isRequired,
+	setAuthorsList: PropTypes.func.isRequired,
+};
 
 export default CourseAuthors;

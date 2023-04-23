@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Button, Input } from 'common';
@@ -18,15 +19,17 @@ import dateGenerator from 'helpers/dateGenerator';
 import styles from 'components/CreateCourse/CreateCourse.module.css';
 import AddAuthor from './AddAuthor';
 import AllAuthors from './AllAuthors';
-import CourseAuthors from './CourseAuthors';
 import CourseDuration from './CourseDuration';
+import CourseAuthors from './CourseAuthors';
 
-function CreateCourse({ setIsAddingCourse }) {
+function CreateCourse() {
 	const [courseTitle, setCourseTitle] = useState('');
 	const [descriptionText, setDescriptionText] = useState('');
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
 	const [courseAuthorsList, setCourseAuthorsList] = useState([]);
-	const [courseDuration, setCourseDuration] = useState(0);
+	const [courseDuration, setCourseDuration] = useState('');
+
+	const navigation = useNavigate();
 
 	const handleTitle = useCallback(
 		(e) => {
@@ -63,7 +66,7 @@ function CreateCourse({ setIsAddingCourse }) {
 				alert('Duration has to be more than zero');
 			} else {
 				mockedCoursesList.push(createdCourse);
-				setIsAddingCourse(false);
+				navigation('/courses');
 			}
 		},
 		[
@@ -71,7 +74,7 @@ function CreateCourse({ setIsAddingCourse }) {
 			courseDuration,
 			courseTitle,
 			descriptionText,
-			setIsAddingCourse,
+			navigation,
 		]
 	);
 
@@ -79,7 +82,7 @@ function CreateCourse({ setIsAddingCourse }) {
 		id: 'title',
 		placeholderText: TITLE_INPUT_PLACEHOLDER_TEXT,
 		labelText: TITLE_INPUT_LABEL_TEXT,
-		required: 'required',
+		required: true,
 		value: courseTitle,
 		onChange: handleTitle,
 	};

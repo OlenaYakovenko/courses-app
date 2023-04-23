@@ -1,0 +1,26 @@
+.course-info a {
+    text-decoration: none;
+}
+
+.info-title {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.info-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.info-description {
+    flex: 60%;
+}
+.info-meta p {
+    margin-bottom: 0.5rem;
+}
+
+.info-meta span, .authors {
+    text-transform: capitalize;
+    font-weight: bold;
+}

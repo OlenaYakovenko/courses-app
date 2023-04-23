@@ -1,4 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
+
 import { Button, Input } from 'common';
 import {
 	mockedCoursesList,
@@ -47,5 +49,9 @@ function SearchBar({ setCourses }) {
 		</div>
 	);
 }
+
+SearchBar.propTypes = {
+	setCourses: PropTypes.func.isRequired,
+};
 
 export default SearchBar;

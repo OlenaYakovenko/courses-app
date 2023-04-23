@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import {
 	mockedCoursesList,
 	mockedAuthorsList,
@@ -10,7 +12,9 @@ import { CourseCard, SearchBar } from 'components/Courses/components';
 
 import styles from './Courses.module.css';
 
-function Courses({ setIsAddingCourse }) {
+function Courses() {
+	const navigation = useNavigate();
+
 	const [courses, setCourses] = useState([]);
 
 	useEffect(() => {
@@ -18,8 +22,8 @@ function Courses({ setIsAddingCourse }) {
 	}, []);
 
 	const handleAddCourse = useCallback(
-		() => setIsAddingCourse(true),
-		[setIsAddingCourse]
+		() => navigation('/courses/add'),
+		[navigation]
 	);
 
 	return (

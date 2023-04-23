@@ -78,3 +78,5 @@ export const EMAIL_INPUT_PLACEHOLDER_TEXT = 'Enter email';
 
 export const PASSWORD_LABEL_TEXT = 'Password';
 export const PASSWORD_INPUT_PLACEHOLDER_TEXT = 'Enter password';
+
+export const BASE_URL = 'http://localhost:4000/';

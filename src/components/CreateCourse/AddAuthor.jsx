@@ -1,3 +1,7 @@
+import { useCallback, useState } from 'react';
+import { PropTypes } from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
+
 import { Button, Input } from 'common';
 import {
 	CREATE_AUTHOR_BUTTON_TEXT,
@@ -6,8 +10,6 @@ import {
 	AUTHOR_INPUT_PLACEHOLDER_TEXT,
 } from 'constants';
 
-import { useCallback, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import styles from './AddAuthor.module.css';
 
 function AddAuthor({ setAuthorsList, authorsList }) {
@@ -49,4 +51,15 @@ function AddAuthor({ setAuthorsList, authorsList }) {
 		</fieldset>
 	);
 }
+
+AddAuthor.propTypes = {
+	authorsList: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	).isRequired,
+	setAuthorsList: PropTypes.func.isRequired,
+};
+
 export default AddAuthor;

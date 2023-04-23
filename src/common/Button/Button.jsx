@@ -1,11 +1,13 @@
+import PropTypes from 'prop-types';
+
 import styles from './Button.module.css';
 
 function Button({
 	type = 'button',
-	className,
-	text,
-	icon,
-	onClick,
+	className = '',
+	text = '',
+	icon = '',
+	onClick = null,
 	...otherProps
 }) {
 	return (
@@ -22,5 +24,13 @@ function Button({
 		</button>
 	);
 }
+
+Button.propTypes = {
+	type: PropTypes.string,
+	className: PropTypes.string,
+	text: PropTypes.string,
+	icon: PropTypes.string,
+	onClick: PropTypes.func,
+};
 
 export default Button;
