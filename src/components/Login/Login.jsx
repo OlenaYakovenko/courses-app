@@ -1,11 +1,8 @@
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
 import { useState, useCallback, useEffect } from 'react';
-
-import PropTypes from 'prop-types';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
-	BASE_URL,
 	EMAIL_INPUT_PLACEHOLDER_TEXT,
 	EMAIL_LABEL_TEXT,
 	LOGIN_BUTTON_TEXT,
@@ -15,11 +12,12 @@ import {
 
 import { Button, Input } from 'common';
 
-import { setLocalStorage } from 'helpers/localStorageHelper';
-
+import selectUser from 'store/user/userSelectors';
+import { setCurrentUser } from 'store/user/userSlice';
+import api from 'store/services';
 import styles from './Login.module.css';
 
-function Login({ setUser, isAuth }) {
+function Login() {
 	const [errorMessage, setErrorMessage] = useState('');
 	const [loginCredentials, setLoginCredentials] = useState({
 		email: '',
@@ -27,10 +25,13 @@ function Login({ setUser, isAuth }) {
 	});
 	const { email, password } = loginCredentials;
 	const navigation = useNavigate();
+	const dispatch = useDispatch();
+
+	const currentUser = useSelector(selectUser);
 
 	useEffect(() => {
-		if (isAuth) navigation('/courses');
-	}, [navigation, isAuth]);
+		if (currentUser.isAuth) navigation('/courses');
+	}, [navigation, currentUser.isAuth]);
 
 	const handleCredChange = useCallback((e) => {
 		setLoginCredentials((prevState) => ({
@@ -48,11 +49,16 @@ function Login({ setUser, isAuth }) {
 				password,
 			};
 			try {
-				const response = await axios.post(`${BASE_URL}login`, user);
-				setLocalStorage('userToken', response.data.result);
-
-				const { name, email: userEmail } = response.data.user;
-				setUser({ isAuth: true, name, userEmail, token: response.data.result });
+				const response = await api.login(user);
+				const { name, email: userEmail } = response.user;
+				dispatch(
+					setCurrentUser({
+						isAuth: true,
+						name,
+						userEmail,
+						token: response.result,
+					})
+				);
 				navigation('/courses');
 			} catch (err) {
 				console.log(err);
@@ -67,7 +73,7 @@ function Login({ setUser, isAuth }) {
 				setErrorMessage(err.message);
 			}
 		},
-		[navigation, setUser, email, password]
+		[navigation, dispatch, email, password]
 	);
 
 	return (
@@ -109,8 +115,4 @@ function Login({ setUser, isAuth }) {
 	);
 }
 
-Login.propTypes = {
-	setUser: PropTypes.func.isRequired,
-	isAuth: PropTypes.bool.isRequired,
-};
 export default Login;

@@ -1,9 +1,7 @@
-import axios from 'axios';
 import { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input } from 'common';
 import {
-	BASE_URL,
 	EMAIL_INPUT_PLACEHOLDER_TEXT,
 	EMAIL_LABEL_TEXT,
 	NAME_INPUT_PLACEHOLDER_TEXT,
@@ -12,7 +10,9 @@ import {
 	PASSWORD_LABEL_TEXT,
 	REGISTRATION_BUTTON_TEXT,
 } from 'constants.js';
-import styles from 'components/Registration/Registration.module.css';
+import api from 'store/services';
+
+import styles from './Registration.module.css';
 
 function Registration() {
 	const [registrationCredentials, setRegistrationCredentials] = useState({
@@ -41,7 +41,7 @@ function Registration() {
 				password,
 			};
 			try {
-				const response = await axios.post(`${BASE_URL}register`, user);
+				const response = await api.register(user);
 				console.log(response);
 				navigation('/login');
 			} catch (error) {

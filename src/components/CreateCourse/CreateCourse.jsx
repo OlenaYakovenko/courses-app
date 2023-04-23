@@ -1,6 +1,10 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import { v4 as uuidv4 } from 'uuid';
+
+import { saveNewCourse } from 'store/courses/coursesSlice';
 
 import { Button, Input } from 'common';
 
@@ -10,24 +14,24 @@ import {
 	DESCRIPTION_PLACEHOLDER_TEXT,
 	TITLE_INPUT_LABEL_TEXT,
 	TITLE_INPUT_PLACEHOLDER_TEXT,
-	mockedAuthorsList,
-	mockedCoursesList,
 } from 'constants.js';
 
 import dateGenerator from 'helpers/dateGenerator';
 
-import styles from 'components/CreateCourse/CreateCourse.module.css';
 import AddAuthor from './AddAuthor';
 import AllAuthors from './AllAuthors';
 import CourseDuration from './CourseDuration';
 import CourseAuthors from './CourseAuthors';
 
+import styles from './CreateCourse.module.css';
+
 function CreateCourse() {
 	const [courseTitle, setCourseTitle] = useState('');
 	const [descriptionText, setDescriptionText] = useState('');
-	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
 	const [courseAuthorsList, setCourseAuthorsList] = useState([]);
 	const [courseDuration, setCourseDuration] = useState('');
+
+	const dispatch = useDispatch();
 
 	const navigation = useNavigate();
 
@@ -54,7 +58,7 @@ function CreateCourse() {
 				description: descriptionText,
 				creationDate: dateGenerator(),
 				duration: courseDuration,
-				authors: courseAuthorsList.map(({ id }) => id),
+				authors: courseAuthorsList,
 			};
 
 			const { title, description, duration, authors } = createdCourse;
@@ -65,7 +69,7 @@ function CreateCourse() {
 			} else if (duration < 1) {
 				alert('Duration has to be more than zero');
 			} else {
-				mockedCoursesList.push(createdCourse);
+				dispatch(saveNewCourse(createdCourse));
 				navigation('/courses');
 			}
 		},
@@ -75,6 +79,7 @@ function CreateCourse() {
 			courseTitle,
 			descriptionText,
 			navigation,
+			dispatch,
 		]
 	);
 
@@ -115,13 +120,8 @@ function CreateCourse() {
 					<textarea {...descriptionProps} />
 				</div>
 				<div className={styles['form-grid']}>
-					<AddAuthor
-						setAuthorsList={setAuthorsList}
-						authorsList={authorsList}
-					/>
+					<AddAuthor />
 					<AllAuthors
-						authorsList={authorsList}
-						setAuthorsList={setAuthorsList}
 						courseAuthorsList={courseAuthorsList}
 						setCourseAuthorsList={setCourseAuthorsList}
 					/>
@@ -131,9 +131,7 @@ function CreateCourse() {
 					/>
 					<CourseAuthors
 						courseAuthorsList={courseAuthorsList}
-						setAuthorsList={setAuthorsList}
 						setCourseAuthorsList={setCourseAuthorsList}
-						authorsList={authorsList}
 					/>
 				</div>
 			</form>

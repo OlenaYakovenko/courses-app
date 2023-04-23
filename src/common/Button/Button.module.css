@@ -19,3 +19,7 @@
     background-color: #e5c4fa;
     box-shadow: var(--dark-shadow);
 }
+
+.button-icon {
+    width: 1rem;
+}

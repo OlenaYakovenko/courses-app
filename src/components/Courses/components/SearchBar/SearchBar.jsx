@@ -1,27 +1,32 @@
 import { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { Button, Input } from 'common';
 import {
-	mockedCoursesList,
 	SEARCH_BUTTON_TEXT,
 	SEARCH_INPUT_PLACEHOLDER_TEXT,
 } from 'constants.js';
 
+import { useDispatch, useSelector } from 'react-redux';
+import selectCourses from 'store/courses/coursesSelectors';
+import { getCourses } from 'store/courses/coursesSlice';
 import styles from './SearchBar.module.css';
 
-function SearchBar({ setCourses }) {
+function SearchBar() {
+	const [allCourses, setAllCourses] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
+	const courses = useSelector(selectCourses);
+
+	const dispatch = useDispatch();
 
 	const handleInputChange = useCallback(
 		(e) => {
 			const value = e.target.value.trim();
 			if (!value) {
-				setCourses(mockedCoursesList);
+				dispatch(getCourses(allCourses));
 			}
 			setSearchTerm(value);
 		},
-		[setCourses]
+		[dispatch, allCourses]
 	);
 
 	const handleSearch = useCallback(() => {
@@ -29,14 +34,15 @@ function SearchBar({ setCourses }) {
 		if (!query) {
 			setSearchTerm('');
 		} else {
-			const newCourses = mockedCoursesList.filter(
+			const newCourses = courses.filter(
 				({ id, title }) =>
 					id.toLowerCase().includes(query.toLowerCase()) ||
 					title.toLowerCase().includes(query.toLowerCase())
 			);
-			setCourses(newCourses);
+			setAllCourses(courses);
+			dispatch(getCourses(newCourses));
 		}
-	}, [searchTerm, setCourses]);
+	}, [dispatch, courses, searchTerm]);
 
 	return (
 		<div className={styles['search-bar']}>
@@ -49,9 +55,5 @@ function SearchBar({ setCourses }) {
 		</div>
 	);
 }
-
-SearchBar.propTypes = {
-	setCourses: PropTypes.func.isRequired,
-};
 
 export default SearchBar;

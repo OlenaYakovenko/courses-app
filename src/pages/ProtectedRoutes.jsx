@@ -1,16 +1,15 @@
 import { Outlet, Navigate } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import selectUser from 'store/user/userSelectors';
 
-function ProtectedRoutes({ isAuth }) {
-	if (!isAuth) {
+function ProtectedRoutes() {
+	const user = useSelector(selectUser);
+
+	if (!user.isAuth) {
 		return <Navigate to='/login' />;
 	}
 	return <Outlet />;
 }
-
-ProtectedRoutes.propTypes = {
-	isAuth: PropTypes.bool.isRequired,
-};
 
 export default ProtectedRoutes;

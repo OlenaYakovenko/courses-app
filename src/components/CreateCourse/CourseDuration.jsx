@@ -42,7 +42,8 @@ function CourseDuration({ courseDuration, setCourseDuration }) {
 }
 
 CourseDuration.propTypes = {
-	courseDuration: PropTypes.string.isRequired,
+	courseDuration: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+		.isRequired,
 	setCourseDuration: PropTypes.func.isRequired,
 };
 

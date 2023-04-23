@@ -17,10 +17,13 @@ function Button({
 			onClick={onClick}
 			{...otherProps}
 		>
-			<span className={styles['button-text']}>{text}</span>
-			<span className={styles['button-icon']}>
-				<i>{icon}</i>
-			</span>
+			{text && <span className={styles['button-text']}>{text}</span>}
+
+			{icon && (
+				<span className={styles['button-icon']}>
+					<img src={icon} alt='' />
+				</span>
+			)}
 		</button>
 	);
 }
