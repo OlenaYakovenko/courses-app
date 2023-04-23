@@ -7,6 +7,7 @@ import pipeDuration from 'helpers/pipeDuration';
 import { SHOW_COURSE_BUTTON_TEXT } from 'constants.js';
 
 import { useCallback } from 'react';
+
 import styles from './CourseCard.module.css';
 
 function CourseCard({

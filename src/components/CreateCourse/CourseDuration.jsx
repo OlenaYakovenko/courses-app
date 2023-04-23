@@ -45,4 +45,5 @@ CourseDuration.propTypes = {
 	courseDuration: PropTypes.string.isRequired,
 	setCourseDuration: PropTypes.func.isRequired,
 };
+
 export default CourseDuration;

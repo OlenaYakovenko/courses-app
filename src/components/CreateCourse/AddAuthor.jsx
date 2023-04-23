@@ -61,4 +61,5 @@ AddAuthor.propTypes = {
 	).isRequired,
 	setAuthorsList: PropTypes.func.isRequired,
 };
+
 export default AddAuthor;

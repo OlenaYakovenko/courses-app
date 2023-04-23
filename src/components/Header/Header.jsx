@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import { deleteLocalStorage } from 'helpers/localStorageHelper';
 
 import { Button } from 'common';
-import Logo from 'components/Header/components/Logo/Logo';
 import { LOGOUT_BUTTON_TEXT } from 'constants.js';
+import Logo from './components/Logo/Logo';
 
-import styles from 'components/Header/Header.module.css';
+import styles from './Header.module.css';
 
 function Header({ user = {}, setUser }) {
 	const navigation = useNavigate();

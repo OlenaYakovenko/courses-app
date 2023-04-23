@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -9,7 +10,7 @@ import {
 import { Button } from 'common';
 import { CourseCard, SearchBar } from 'components/Courses/components';
 
-import styles from 'components/Courses/Courses.module.css';
+import styles from './Courses.module.css';
 
 function Courses() {
 	const navigation = useNavigate();

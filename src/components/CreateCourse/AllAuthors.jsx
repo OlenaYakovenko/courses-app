@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 
 import { Button } from 'common';
 import { ADD_AUTHOR_BUTTON_TEXT } from 'constants.js';
+
 import styles from './AllAuthors.module.css';
 
 function AllAuthors({
@@ -56,4 +57,5 @@ AllAuthors.propTypes = {
 	setCourseAuthorsList: PropTypes.func.isRequired,
 	setAuthorsList: PropTypes.func.isRequired,
 };
+
 export default AllAuthors;
