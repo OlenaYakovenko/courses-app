@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 
 import { Button, Input } from 'common';
 import {
@@ -9,7 +8,7 @@ import {
 	AUTHOR_INPUT_PLACEHOLDER_TEXT,
 } from 'constants';
 
-import { saveNewAuthor } from 'store/authors/authorsSlice';
+import { createAuthor } from 'store/authors/authorsSlice';
 import styles from './AddAuthor.module.css';
 
 function AddAuthor() {
@@ -28,9 +27,9 @@ function AddAuthor() {
 		if (!newAuthorName) {
 			return;
 		}
-		const authorID = uuidv4();
-		const newAuthor = { id: authorID, name: newAuthorName };
-		dispatch(saveNewAuthor(newAuthor));
+		const newAuthor = { name: newAuthorName };
+
+		dispatch(createAuthor(newAuthor));
 		setNewAuthorName('');
 	}, [dispatch, newAuthorName]);
 

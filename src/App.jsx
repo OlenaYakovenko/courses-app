@@ -1,23 +1,20 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-
-import api from 'store/services';
-import { getCourses } from 'store/courses/coursesSlice';
-import { getAuthors } from 'store/authors/authorsSlice';
-import { setCurrentUser } from 'store/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
 	Courses,
-	CreateCourse,
+	CourseForm,
 	Login,
 	CourseInfo,
 	Registration,
 } from 'components';
 import MainLayout from 'layout/Main';
-import ProtectedRoutes from 'pages/ProtectedRoutes';
+import PrivateRouter from 'pages/PrivateRouter';
 import NotFound from 'pages/NotFound';
 
+import { selectUser } from 'store/user/userSelectors';
+import { authorize } from 'store/user/userSlice';
 import { getLocalStorage } from './helpers/localStorageHelper';
 
 import './App.css';
@@ -25,47 +22,44 @@ import './App.css';
 function App() {
 	const dispatch = useDispatch();
 	const token = getLocalStorage('userToken');
-
-	const fetchCourses = useCallback(async () => {
-		try {
-			const response = await api.getRemoteCourses();
-			dispatch(getCourses(response));
-		} catch (error) {
-			console.log(error);
-		}
-	}, [dispatch]);
-
-	const fetchAuthors = useCallback(async () => {
-		try {
-			const response = await api.getRemoteAuthors();
-			dispatch(getAuthors(response));
-		} catch (error) {
-			console.log(error);
-		}
-	}, [dispatch]);
+	const user = useSelector(selectUser);
 
 	useEffect(() => {
 		if (token) {
-			dispatch(setCurrentUser({ isAuth: true }));
+			dispatch(authorize(token));
 		}
 	}, [dispatch, token]);
-
-	useEffect(() => {
-		fetchCourses();
-		fetchAuthors();
-	}, [fetchCourses, fetchAuthors, token]);
 
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route element={<MainLayout />}>
-					<Route element={<ProtectedRoutes />}>
-						<Route path='/courses'>
-							<Route index element={<Courses />} />
-							<Route path=':courseId' element={<CourseInfo />} />
-							<Route path='add' element={<CreateCourse />} />
-						</Route>
+					<Route path='/' element={<PrivateRouter isAllowed={user.isAuth} />}>
+						<Route path='/courses' element={<Courses />} />
+						<Route path='/courses/:courseId' element={<CourseInfo />} />
 					</Route>
+					<Route
+						path='/courses/add'
+						element={
+							<PrivateRouter
+								isAllowed={user.isAuth && user.role === 'admin'}
+								redirectPath='/courses'
+							>
+								<CourseForm mode='create' />
+							</PrivateRouter>
+						}
+					/>
+					<Route
+						path='/courses/update/:courseId'
+						element={
+							<PrivateRouter
+								isAllowed={user.isAuth && user.role === 'admin'}
+								redirectPath='/courses'
+							>
+								<CourseForm mode='update' />
+							</PrivateRouter>
+						}
+					/>
 					<Route path='/login' element={<Login />} />
 					<Route path='/registration' element={<Registration />} />
 					<Route path='*' element={<NotFound />} />

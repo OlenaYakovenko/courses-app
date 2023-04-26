@@ -1,2 +1,2 @@
-const selectAuthors = (state) => state.authors;
+const selectAuthors = (state) => state.authors.authors;
 export default selectAuthors;

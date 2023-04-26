@@ -1,20 +1,20 @@
-import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useCallback, useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { v4 as uuidv4 } from 'uuid';
-
-import { saveNewCourse } from 'store/courses/coursesSlice';
+import { createCourse, updateCourse } from 'store/courses/coursesSlice';
 
 import { Button, Input } from 'common';
 
 import {
 	CREATE_COURSE_BUTTON_TEXT,
+	UPDATE_COURSE_BUTTON_TEXT,
 	DESCRIPTION_LABEL_TEXT,
 	DESCRIPTION_PLACEHOLDER_TEXT,
 	TITLE_INPUT_LABEL_TEXT,
 	TITLE_INPUT_PLACEHOLDER_TEXT,
 } from 'constants.js';
+import selectCourses from 'store/courses/coursesSelectors';
 
 import dateGenerator from 'helpers/dateGenerator';
 
@@ -23,17 +23,38 @@ import AllAuthors from './AllAuthors';
 import CourseDuration from './CourseDuration';
 import CourseAuthors from './CourseAuthors';
 
-import styles from './CreateCourse.module.css';
+import styles from './CourseForm.module.css';
 
-function CreateCourse() {
+function CourseForm({ mode }) {
 	const [courseTitle, setCourseTitle] = useState('');
 	const [descriptionText, setDescriptionText] = useState('');
 	const [courseAuthorsList, setCourseAuthorsList] = useState([]);
 	const [courseDuration, setCourseDuration] = useState('');
+	const [creationDate, setCreationDate] = useState('');
 
 	const dispatch = useDispatch();
 
 	const navigation = useNavigate();
+	const courses = useSelector(selectCourses);
+
+	const { courseId } = useParams();
+	useEffect(() => {
+		if (mode === 'update') {
+			const courseToBeUpdated = courses.find(({ id }) => id === courseId);
+			const {
+				title,
+				description,
+				authors,
+				duration,
+				creationDate: created,
+			} = courseToBeUpdated;
+			setCourseTitle(title);
+			setDescriptionText(description);
+			setCourseAuthorsList(authors);
+			setCourseDuration(duration);
+			setCreationDate(created);
+		}
+	}, [mode, courses, courseId]);
 
 	const handleTitle = useCallback(
 		(e) => {
@@ -47,21 +68,19 @@ function CreateCourse() {
 		[setDescriptionText]
 	);
 
-	const handleCreateCourse = useCallback(
+	const handleCourse = useCallback(
 		(e) => {
 			e.preventDefault();
-			const courseID = uuidv4();
 
-			const createdCourse = {
-				id: courseID,
+			const currentCourse = {
 				title: courseTitle,
 				description: descriptionText,
-				creationDate: dateGenerator(),
+				creationDate: creationDate || dateGenerator(),
 				duration: courseDuration,
 				authors: courseAuthorsList,
 			};
 
-			const { title, description, duration, authors } = createdCourse;
+			const { title, description, duration, authors } = currentCourse;
 			if (!title || !description || !duration || authors.length < 1) {
 				alert('Please, fill in all fields');
 			} else if (description.length < 2) {
@@ -69,7 +88,12 @@ function CreateCourse() {
 			} else if (duration < 1) {
 				alert('Duration has to be more than zero');
 			} else {
-				dispatch(saveNewCourse(createdCourse));
+				if (mode === 'create') {
+					dispatch(createCourse(currentCourse));
+				}
+				if (mode === 'update') {
+					dispatch(updateCourse({ courseId, currentCourse }));
+				}
 				navigation('/courses');
 			}
 		},
@@ -80,6 +104,9 @@ function CreateCourse() {
 			descriptionText,
 			navigation,
 			dispatch,
+			mode,
+			courseId,
+			creationDate,
 		]
 	);
 
@@ -111,8 +138,12 @@ function CreateCourse() {
 					<Input {...inputTitleProps} />
 					<Button
 						type='submit'
-						text={CREATE_COURSE_BUTTON_TEXT}
-						onClick={handleCreateCourse}
+						text={
+							mode === 'create'
+								? CREATE_COURSE_BUTTON_TEXT
+								: UPDATE_COURSE_BUTTON_TEXT
+						}
+						onClick={handleCourse}
 					/>
 				</div>
 				<div className={styles['form-textarea']}>
@@ -139,4 +170,4 @@ function CreateCourse() {
 	);
 }
 
-export default CreateCourse;
+export default CourseForm;

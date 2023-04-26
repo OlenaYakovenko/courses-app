@@ -46,7 +46,7 @@
                 "tabWidth": 2 
             } 
         ],
-        "react/prop-types": [0],
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
         "no-console": "off",
         "no-alert": "off",
         "no-restricted-syntax": [
@@ -56,9 +56,11 @@
                 "message": "Unexpected property on console object was called"
             }
         ],
+        "no-param-reassign": ["error", { "props": false }],
+        
+        "react/prop-types": [0],
         "react/jsx-props-no-spreading": "off",
         "react/button-has-type": "off",
-        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
         "react/require-default-props": [
             "error", 
             {

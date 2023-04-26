@@ -1,14 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { deleteLocalStorage } from 'helpers/localStorageHelper';
+import { selectUser } from 'store/user/userSelectors';
+import { logout } from 'store/user/userSlice';
 
 import { Button } from 'common';
 import { LOGOUT_BUTTON_TEXT } from 'constants.js';
 import Logo from './components/Logo/Logo';
-
-import selectUser from 'store/user/userSelectors';
-import { logout } from 'store/user/userSlice';
 
 import styles from './Header.module.css';
 
@@ -18,10 +16,10 @@ function Header() {
 	const user = useSelector(selectUser);
 
 	const handleLogout = () => {
-		deleteLocalStorage({ key: 'userToken' });
-		dispatch(logout({ isAuth: false, name: '', email: '', token: '' }));
+		dispatch(logout());
 		navigation('/login');
 	};
+
 	return (
 		<header className={styles.header}>
 			<Logo />
