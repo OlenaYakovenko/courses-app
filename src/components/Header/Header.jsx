@@ -25,7 +25,9 @@ function Header() {
 			<Logo />
 			{user.isAuth && (
 				<div className={styles['header-write']}>
-					<p className={styles.name}>{user.name}</p>
+					<p className={styles.name} data-testid='headerUserName'>
+						{user.name}
+					</p>
 					<Button text={LOGOUT_BUTTON_TEXT} onClick={handleLogout} />
 				</div>
 			)}

@@ -5,6 +5,13 @@
     }, 
     "parser": "@babel/eslint-parser",
     "extends": ["plugin:react/recommended", "airbnb", "plugin:react/jsx-runtime", "plugin:react-hooks/recommended", "plugin:import/recommended", "prettier"], 
+    "overrides": [
+		{
+			// Enable eslint-plugin-testing-library rules or preset only for matching testing files!
+			"files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+			"extends": ["plugin:jest/recommended","plugin:testing-library/react"]
+		}
+	],
     "parserOptions": { 
         "ecmaFeatures": { 
             "jsx": true 
@@ -67,6 +74,11 @@
               "forbidDefaultForRequired": true,        
               "functions": "defaultArguments" 
             }
-          ]
+          ],
+          
+        "testing-library/await-async-query": "error",
+        "testing-library/no-await-sync-query": "error",
+        "testing-library/no-debugging-utils": "warn",
+        "testing-library/no-dom-import": "off"
     } 
 } 

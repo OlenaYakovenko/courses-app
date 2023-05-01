@@ -132,7 +132,7 @@ function CourseForm({ mode }) {
 	};
 
 	return (
-		<section>
+		<section data-testid='courseFormComponent'>
 			<form className={styles['create-course-form']}>
 				<div className={styles['form-header']}>
 					<Input {...inputTitleProps} />
