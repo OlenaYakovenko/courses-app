@@ -6,7 +6,7 @@ import {
 	CREATE_AUTHOR_BUTTON_TEXT,
 	AUTHOR_LABEL_TEXT,
 	AUTHOR_INPUT_PLACEHOLDER_TEXT,
-} from 'constants';
+} from 'constants.js';
 
 import { createAuthor } from 'store/authors/authorsSlice';
 import styles from './AddAuthor.module.css';
@@ -34,7 +34,7 @@ function AddAuthor() {
 	}, [dispatch, newAuthorName]);
 
 	return (
-		<fieldset className={styles['form-add']}>
+		<fieldset className={styles['form-add']} data-testid='newAuthor'>
 			<legend>Add author</legend>
 			<Input
 				id='author'
@@ -44,7 +44,11 @@ function AddAuthor() {
 				onChange={handleAuthorName}
 			/>
 			<div className={styles['btn-container']}>
-				<Button text={CREATE_AUTHOR_BUTTON_TEXT} onClick={handleCreateAuthor} />
+				<Button
+					text={CREATE_AUTHOR_BUTTON_TEXT}
+					onClick={handleCreateAuthor}
+					data-testid='createAuthor'
+				/>
 			</div>
 		</fieldset>
 	);

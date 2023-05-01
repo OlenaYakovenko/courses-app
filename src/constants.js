@@ -81,3 +81,33 @@ export const PASSWORD_LABEL_TEXT = 'Password';
 export const PASSWORD_INPUT_PLACEHOLDER_TEXT = 'Enter password';
 
 export const BASE_URL = 'http://localhost:4000';
+
+export const mockStore = {
+	user: {
+		user: {
+			isAuth: true,
+			name: 'Alice',
+			email: 'alice@test.com',
+			token: '123456789',
+			role: 'admin',
+		},
+		isLoading: false,
+		isSuccess: false,
+		isError: false,
+		message: '',
+	},
+	courses: {
+		courses: [],
+		isError: false,
+		isSuccess: false,
+		isLoading: false,
+		message: '',
+	},
+	authors: {
+		authors: [],
+		isError: false,
+		isSuccess: false,
+		isLoading: false,
+		message: '',
+	},
+};

@@ -25,11 +25,11 @@ function AllAuthors({ courseAuthorsList, setCourseAuthorsList }) {
 		[setCourseAuthorsList, courseAuthorsList]
 	);
 	return (
-		<fieldset className={styles['form-authors']}>
+		<fieldset className={styles['form-authors']} data-testid='allAuthorsList'>
 			<legend>Authors</legend>
 			{renderedAuthors.map((author) => (
 				<p key={author.id} className={styles.author}>
-					<span>{author.name}</span>
+					<span data-testid='allAuthorsName'>{author.name}</span>
 					<Button
 						text={ADD_AUTHOR_BUTTON_TEXT}
 						data-author-id={author.id}

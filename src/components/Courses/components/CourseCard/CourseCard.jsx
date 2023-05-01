@@ -54,17 +54,20 @@ function CourseCard({
 	}, [navigation, id]);
 
 	return (
-		<article className={styles['course-card']}>
+		<article
+			className={styles['course-card']}
+			data-testid='courseCardComponent'
+		>
 			<div className={styles['card-content']}>
-				<h2>{title}</h2>
-				<p>{description}</p>
+				<h2 data-testid='courseTitle'>{title}</h2>
+				<p data-testid='courseDescription'>{description}</p>
 			</div>
 			<div className={styles['card-info']}>
 				<p className={styles.author}>
 					<span className={styles['info-label']}>authors: </span>
 					{courseAuthorsNames}
 				</p>
-				<p>
+				<p data-testid='courseDuration'>
 					<span className={styles['info-label']}>duration: </span>
 					{pipeDuration(duration)} hours
 				</p>

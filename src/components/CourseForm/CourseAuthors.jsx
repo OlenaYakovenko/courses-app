@@ -22,7 +22,7 @@ function CourseAuthors({ courseAuthorsList, setCourseAuthorsList }) {
 		[courseAuthorsList, setCourseAuthorsList]
 	);
 	return (
-		<fieldset>
+		<fieldset data-testid='courseAuthorsList'>
 			<legend>Course authors</legend>
 			{courseAuthorsList.length > 0 ? (
 				courseAuthorsList.map((author) => {
@@ -30,7 +30,7 @@ function CourseAuthors({ courseAuthorsList, setCourseAuthorsList }) {
 					const { name, id } = authorObj;
 					return (
 						<p key={id} className={styles.author}>
-							<span>{name}</span>
+							<span data-testid='courseAuthorName'>{name}</span>
 							<Button
 								text={DELETE_AUTHOR_BUTTON_TEXT}
 								data-author-id={author}
